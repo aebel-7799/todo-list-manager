@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #eee;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #00ff11;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        input[type=text] {
+            padding: 8px;
+            width: 200px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 8px;
+            width: 60px;
+            border: none;
+            border-radius: 5px;
+            background: #b705f3;
+            color: #f0f4f4f1;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #4a0147;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #1f1f1f;
+            margin: 8px auto;
+            padding: 10px;
+            width: 40%;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        a {
+            color: #07f533;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        a:hover {
+            color: #045f1b;
+        }
+    </style>
+</head>
+<body>
+    <h1>📃 To-Do List Manager</h1><br><br>
+    
+    <form method="POST" action="{{ url_for('add') }}">
+        <input type="text" name="task" placeholder="Enter new task" required autocomplete="off">
+        <button type="submit">Add</button>
+    </form>
+
+    <form method="GET" action="{{ url_for('home') }}">
+        <input type="text" name="search" placeholder="Search tasks" value="{{ search }}" autocomplete="off">
+        <button type="submit">Search</button>
+    </form><br>
+    
+    <ul>
+        
+
+        {% for t in tasks %}
+        <li>
+
+            {{ t }}
+            <span>
+                <a href="{{ url_for('update', id=loop.index0) }}">✏️ Update</a>
+                <a href="{{ url_for('delete', id=loop.index0) }}">🗑️ Delete</a>
+            </span>
+        </li>
+        {% else %}
+        <p>No tasks found.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
